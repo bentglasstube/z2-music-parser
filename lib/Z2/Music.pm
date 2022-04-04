@@ -246,10 +246,22 @@ sub dump_song {
   my $tr  = 0;
   my $nr  = 0;
 
+  my $time = 0;
+  my $tempo = -1;
+
   foreach my $phrase (@phrases) {
     my %parts = $self->phrase_parts($phrase);
 
-    my ($p1, $p1l) = $self->notes($parts{pulse1}, $parts{tempo});
+    if ($parts{tempo} != $tempo) {
+      my $bpm = 3600 / $self->{duration}{$parts{tempo}}[3];
+
+      say STDERR "Tempo changed to $bpm";
+      $tempo = $parts{tempo};
+      $map->new_event('set_tempo', 4 * $time, 60_000_000 / $bpm);
+      $time = 0;
+    }
+
+    my ($p1, $p1l) = $self->notes($parts{pulse1},   $parts{tempo});
     my ($p2, $p2l) = $self->notes($parts{pulse2},   $parts{tempo}, $p1l);
     my ($t,  $tl)  = $self->notes($parts{triangle}, $parts{tempo}, $p1l);
     my ($n,  $nl)  = $self->notes($parts{noise},    $parts{tempo}, $p1l);
@@ -266,6 +278,8 @@ sub dump_song {
     $p2r = __midify($p2, $pulse2,   2,  $p2r);
     $tr  = __midify($t,  $triangle, 3,  $tr);
     $nr  = __midify($n,  $noise,    10, $nr, 38);
+
+    $time += $p1l;
   }
 
   my $opus = MIDI::Opus->new({

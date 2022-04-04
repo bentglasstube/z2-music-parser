@@ -20,13 +20,13 @@ main() {
 
   parse_song "$rom" 1 0 "town-intro"
   parse_song "$rom" 1 1 "town-theme"
-  parse_song "$rom" 1 2 "house-theme"
+  parse_song "$rom" 1 3 "house-theme"
   parse_song "$rom" 1 4 "item-fanfare"
 
   parse_song "$rom" 3 0 "palace-intro"
   parse_song "$rom" 3 1 "palace-theme"
-  parse_song "$rom" 3 2 "boss-theme"
-  parse_song "$rom" 3 4 "boss-fanfare"
+  parse_song "$rom" 3 3 "boss-theme"
+  parse_song "$rom" 3 4 "item-fanfare"
   parse_song "$rom" 3 6 "crystal-fanfare"
 
   parse_song "$rom" 5 0 "great-palace-intro"
@@ -35,7 +35,7 @@ main() {
   parse_song "$rom" 5 3 "credits-theme"
   parse_song "$rom" 5 4 "item-fanfare"
   parse_song "$rom" 5 5 "triforce-fanfare"
-  parse_song "$rom" 5 5 "final-boos-theme"
+  parse_song "$rom" 5 6 "final-boss-theme"
 
   parse_song "$rom" 6 0 "title-intro"
   parse_song "$rom" 6 1 "title-leadin"
